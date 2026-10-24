@@ -1,38 +1,164 @@
+/* The logo animation has a solid black background, so the page matches it. */
 .App {
+  --bg: #000000;
+  --logo-gray: #303030;
+  --text: #e6e6e6;
+  --text-muted: #8c8c8c;
+  --accent: #f2b33d;
+
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--bg);
+  color: var(--text);
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Top "under construction" badge */
+.App-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 32px 16px 0;
+  padding: 8px 18px;
+  border: 1px solid var(--logo-gray);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App-banner-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Logo + loading text, centered in the remaining space */
+.App-main {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
-.App-link {
-  color: #61dafb;
+.App-logo {
+  display: block;
+  width: min(85%, 460px);
+  height: auto;
+  margin-bottom: 40px;
+  pointer-events: none;
 }
 
-@keyframes App-logo-spin {
+.App-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  min-height: 4rem;
+}
+
+.App-loading-text {
+  margin: 0;
+  font-size: clamp(1rem, 2.6vw, 1.3rem);
+  color: var(--text);
+  animation: App-fade-in 400ms ease-out;
+}
+
+.App-loading-dots span {
+  animation: App-dot-blink 1.4s infinite both;
+}
+
+.App-loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.App-loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.App-loading-bar {
+  position: relative;
+  width: min(240px, 60vw);
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--logo-gray);
+  overflow: hidden;
+}
+
+.App-loading-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  border-radius: 2px;
+  background-color: var(--accent);
+  animation: App-bar-slide 1.6s ease-in-out infinite;
+}
+
+.App-footer {
+  padding: 24px 16px 32px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.App-footer p {
+  margin: 0;
+}
+
+@keyframes App-fade-in {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(6px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes App-dot-blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+@keyframes App-bar-slide {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .App-loading-text,
+  .App-loading-dots span,
+  .App-loading-bar-fill {
+    animation: none;
+  }
+
+  .App-loading-dots span {
+    opacity: 1;
+  }
+
+  .App-loading-bar-fill {
+    left: 30%;
   }
 }
